@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset=utf-8 />
+	<title>Environmental Hazards in Assembly District 22</title>
+  <meta
+  name="viewport"
+  content="initial-scale=1,maximum-scale=1,user-scalable=no"
+/>
+<link
+  href="https://api.mapbox.com/mapbox-assembly/v0.24.0/assembly.min.css"
+  rel="stylesheet"
+/>
+<script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js'></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+/>
+
+<style>
+  body {
+      margin: 0;
+      padding: 0;
+      background: #6b6b6b;
+      font-family: Lato, sans-serif;
+      color: #140a2e;
+  }
+
+  h1 {
+      display: inline-block;
+      color: #140a2e;
+      font-weight: bold;
+      font-size: 25px;
+  }
+
+
+  h2 {
+      display: inline-block;
+      color: #140a2e;
+      font-weight: bold;
+      font-size: 21px;
+  }
+
+  h3 {
+      display: inline-block;
+      color: #140a2e;
+      font-size: 21px;
+  }
+
+
+  h4 {
+      display: inline-block;
+      color: #000000;
+      font-size: 17px;
+  }
+
+  h5 {
+      display: inline-block;
+      color: #000000;
+      font-size: 18px;
+  }
+
+  #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 84%;
+  }
+
+  ul.a {
+  list-style-type: circle;
+  margin: 40;
+  padding: 5;
+}
+
+  .leaflet-tooltip {
+min-width: 300px;
+font-size: 140%;
+white-space: normal;
+}
+
+  .legend {
+      padding: 6px 8px;
+      font-size: 1em;
+      background: rgba(75, 75, 75, 0.8);
+      color: whitesmoke;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      width: 160px;
+  }
+
+  .legend h3 {
+      font-size: 1.1em;
+      font-weight: bold;
+      line-height: 1em;
+      color: whitesmoke;
+      margin: 0;
+  }
+
+  .legend h3 span {
+      font-size: 1.3em;
+      margin: 10px 20px 0 0;
+  }
+
+  .legend ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 12px 4px 0;
+  }
+
+  .legend li {
+      height: 22px;
+  }
+
+  .legend span {
+      width: 30px;
+      height: 20px;
+      float: left;
+      margin-right: 10px;
+  }
+
+  label {
+      font-size: 1.1em;
+      font-weight: bold;
+  }
+
+  footer {
+      padding: 6px;
+      width: 100%;
+      float: center;
+  }
+
+  p {
+      font-size: 1em;
+      color: #6A51A3;
+  }
+
+  .link {
+      font-size: 1em;
+      color: #20651e;
+      font-weight: bold;
+  }
+
+  .max-image-width {
+			width: 100%;
+		}
+
+    .sidebar {
+        width: 16%
+    }
+    
+</style>
+</head>
+<body>
+  <div class='flex-parent viewport-full relative scroll-hidden'>
+    <div class='sidebar'>
+      <div class='flex-parent flex-parent--column viewport-third h-full-ml hmax-full bg-white py18 px12'>
+        <div class='flex-child flex-child--grow px40 py40 scroll-auto list-style-type: circle'>
+          <h1>Environmental Hazards in Assembly District 22</h1><br>
+          <h2>Areas of Concern</h2></br>
+		  <b><h3>Hazard 1</h3></b>
+		  <p>Yadda yadda yadda</p>
+		  <b><h3>Hazard 2</h3></b>
+		  <p>Yadda yadda yadda</p>
+		  <b><h3>Hazard 3</h3></b>
+		  <p>Yadda yadda yadda</p>
+          <h2>About Clean and Healthy New York</h2>
+          <p>Clean and Healthy New York is an environmental health advocacy organization committed to building a just and healthy society where toxic chemicals are unthinkable. We are proud to serve in leadership positions for two major statewide disease-prevention coalitions: the JustGreen Partnership, a team of 50 organizations representing over a million New Yorkers, and Lead Free Kids New York, a coalition of individuals and organizations working to end childhood lead exposure in New York. Key priorities include:</p>
+				<ul.a>
+					<li>Safe Personal Care and Cosmetics Act (<a class='link' href='data/2022 CHNY Priorities for BPRHA Caucus.pdf'>S.3331 Rivera, <i>et al.</i>/A.143 Gottfried, <i>et al.</i></a>)</li>
+
+
+
+				</ul.a>
+		<p><b>A full list of our priority bills are available <a class='link' href='data/2022 CHNY Priorities for BPRHA Caucus.pdf'>here</a></b>.</p>
+        </div>
+        <footer class='bg-gray-faint align-center'>
+          <img class="max-image-width" src="images/chny-logo.png" title="Clean and Healthy New York">
+          <ul>
+            <li><h5>Map authored by
+              <a class='link' href='mailto:greg@cleanhealthyny.org'>Greg Campbell-Cohen</a>.</h5>
+            </li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+    <div class='flex-child flex-child--grow viewport-twothirds viewport-full-ml'>
+      <div id="map" class='viewport-twothirds viewport-full-ml'></div>
+    </div>
+  </div>
+</label>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+	<script src="data/districts.js"></script>
+	<script src="data/superfund.js"></script>
+  <script src="data/nyrem.js"></script>
+    <script>
+		// map options
+		var options = {
+		  center: [40.68207254155606, -73.71210081077497],
+		  zoom: 13,
+		  maxZoom: 18,
+		  minZoom: 8,
+		  dragging: false,
+		  zoomSnap: .2,
+          dragging: true,
+          maxBounds: [ [45.21, -71.887],
+    	[40.5, -79.18] ]
+		};
+  
+		// create a Leaflet map in our division container with id of 'map'
+		var map = L.map("map", options);
+  
+		// Leaflet providers base map URL
+		var basemap_source =
+		  "https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png";
+  
+		// Leaflet providers attributes
+		var basemap_options = {
+		  attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+		  subdomains: "abcd",
+		};
+  
+		// request some basemap tiles and add to the map
+		var tiles = L.tileLayer(basemap_source, basemap_options).addTo(map);
+
+		var commonStyles = {
+		  weight: 1,
+		  stroke: 1,
+		  fillOpacity: 2,
+		};
+
+		var districting = L.geoJson(district, {
+		  filter: function (feature) {
+			if (feature.properties) {
+			  return feature;
+			}
+		  }, 
+		  style: function (feature) {
+			if (feature.properties.target)
+			return {
+			  color: "#FFFFFF",
+			  fillColor: "#71b26e",
+			  fillOpacity: .7,
+			} 
+			else {
+			return {
+			  color: "#FFFFFF",
+			  fillColor: "#124d0f",
+			  fillOpacity: .8,
+			};
+		  }},
+		  onEachFeature: function (feature, layer) {
+			if (feature.properties.target) layer.on("mouseover", function () {
+			  layer.setStyle({
+				fillColor: "#d3e9d2",
+				fillOpacity: .7,
+			  });
+			layer.on("mouseout", function () {
+				layer.setStyle({
+				fillColor: "#71b26e",
+				fillOpacity: .8,
+			  })
+			})
+			})
+			else layer.on("mouseover", function () {
+			  layer.setStyle({
+				fillColor: "#d3e9d2",
+				fillOpacity: .7,
+			  }); 
+			 layer.on("mouseout", function () {
+			  layer.setStyle({
+			  fillColor: "#124d0f",
+			  fillOpacity: .8,
+			  });
+			})
+			});
+			layer.bindPopup(
+			  "<b><h3>Assembly District " +
+				layer.feature.properties.DISTRICT +
+				"</b></h3><br>" +
+				"<b><h4>" +
+				layer.feature.properties.NAME +	
+					"</b></big>" +
+				"<br><b>Party: </b>" +
+				layer.feature.properties.party +
+                "</h4>"
+			);
+		  },
+		  }).addTo(map);
+
+    var superf = L.geoJson(superfund, {
+		  pointToLayer: function (feature, latlng) {
+			return L.circleMarker(latlng, commonStyles);
+		  },
+		  filter: function (feature) {
+			if (feature.properties.state) {
+			  return feature;
+			}
+		  }, 
+		  style: function (feature) {
+			return {
+			  color: "#FFFFFF",
+			  fillColor: "#ebb42e",
+			  fillOpacity: 1,
+			  radius: 15,
+			};
+		  },
+		  onEachFeature: function (feature, layer) {
+			layer.on("mouseover", function () {
+			  layer.setStyle({
+				fillColor: "#ffda82",
+				fillOpacity: 1,
+			  });
+			});
+			layer.on("mouseout", function () {
+			  layer.setStyle({
+				fillColor: "#ebb42e",
+				fillOpacity: 1,
+			  });
+			});
+			layer.bindPopup(
+			  "<b><h3>" +
+				layer.feature.properties.name +
+				"</b></h3><br>" +
+				"<h4><b>EPA Superfund Site</b>" +
+				"<br><b>Address: </b>" +
+				layer.feature.properties.address +				
+				"<br><b>Status: </b>" +
+				layer.feature.properties.nplstatus +
+				"<br><b>Hazard Ranking System Score: </b>" +
+				layer.feature.properties.hrsscore +
+                "</h4>" 
+			);
+		  },
+		}).addTo(map);
+
+    var nyreme = L.geoJson(nyrem, {
+      style: function(feature) {
+      return {
+      color: '#6d53ad',
+      weight: 10,
+      fillOpacity: 1,
+      fillColor: '#6d53ad'
+    };
+    },
+    onEachFeature: function (feature, layer) {
+			layer.on("mouseover", function () {
+			  layer.setStyle({
+				fillColor: "#d9d3e8",
+				fillOpacity: 1,
+			  });
+			});
+			layer.on("mouseout", function () {
+			  layer.setStyle({
+				fillColor: "#6d53ad",
+				fillOpacity: 1,
+			  });
+			});
+			layer.bindPopup(
+			  "<b><h3>" +
+				layer.feature.properties.sitename +
+				"</b></h3><br>" +
+				"<h4><b>NYS DEC Remediation Site</b>" +
+				"<br><b>Address: </b>" +
+				layer.feature.properties.address1 +				
+				"<br><b>Program: </b>" +
+				layer.feature.properties.program +
+				"<br><b>Site Class: </b>" +
+				layer.feature.properties.siteclass +
+                "</h4>" 
+			);
+		  },         
+   }).addTo(map);
+
+		function getRadius(area) {
+		  var radius = Math.sqrt(area/Math.PI);
+		  return radius *.3;
+		}
+
+	  </script>
+
+</body>
+
+</html>
